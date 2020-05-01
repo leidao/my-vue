@@ -10,8 +10,11 @@ export const util = {
   },
   //编译文本
    compilerText(node,vm){
-    node.textContent = node.textContent.replace(defaultRE,function(...args){
-       return util.getValue(args[1],vm)
+     if(!node.expr){
+       node.expr = node.textContent
+     }
+    node.textContent = node.expr.replace(defaultRE,function(...args){
+       return JSON.stringify(util.getValue(args[1],vm))
     })
    }
 }

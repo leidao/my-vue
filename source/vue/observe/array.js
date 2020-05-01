@@ -20,7 +20,7 @@ methods.forEach(method=>{
     let inserted;
     switch (method) {
       case 'push':
-      case 'pop':
+      case 'unshift':
         inserted = args     //获取添加的参数
         break;
       case 'splice':
@@ -30,6 +30,8 @@ methods.forEach(method=>{
         break;
     } 
     if(inserted) observeArray(inserted);
+    //数组的更新
+    this.__ob__&&this.__ob__.dep.notify()
     return r
   }
 })

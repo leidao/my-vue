@@ -1,7 +1,13 @@
 import {arrayProtoMethods,observeArray} from './array'
 import {observe} from './index'
+import { Dep } from './dep'
 export class Observer{
   constructor(data){
+    this.dep = new Dep()
+    //给每一个属性值上定义__ob__属性
+    Object.defineProperty(data,'__ob__',{
+      get:()=>this
+    })
     if(Array.isArray(data)){
       //通过修改数组的原型链，重写数组7个会改写自身的原型方法
      data.__proto__ = arrayProtoMethods
@@ -23,18 +29,31 @@ export class Observer{
 
 function defineReactive(data,key,value){
   //递归观测对象的值
-  observe(value)
+  let childObj = observe(value)
+  //每一个属性对应一个dep实例
+  let dep = new Dep()
   Object.defineProperty(data,key,{
+    //在组件中使用了对应的属性才会进行依赖收集
     get(){
       console.log('获取。。。');
-      
+      //每一个属性名和属性值（引用类型）都有一个对应的dep，
+      //对象使用属性名上的dep进行依赖收集，数组使用属性值上的dep进行依赖收集
+      if(Dep.target){
+        //对象的依赖收集
+        dep.depend(Dep.target)
+        if(childObj){
+          //数组的依赖收集
+          childObj.dep.depend(Dep.target)
+        }
+      }
       return value
     },
     set(newValue){
       console.log('设置。。。');
-      
      if(value === newValue) return
      value = newValue;
+     //更新视图
+     dep.notify()
     }
   })
 }

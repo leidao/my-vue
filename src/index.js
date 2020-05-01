@@ -12,4 +12,14 @@ let vm = new Vue({
   }),
 })
 
-console.log('vm',vm.arr[3].push(13) ,vm);
+// console.log('vm',vm.arr[3].push(13) ,vm);
+setTimeout(()=>{
+  // vm.msg = 'zf1';
+  // vm.msg = 'zf2';
+  // vm.msg = 'zf3';
+  vm.msg = {name:''}
+  vm.msg.name = 'zf'
+  // vm.arr[3].push(15)
+  console.log('vm',vm);
+  
+},1000)
