@@ -7,10 +7,10 @@ export class Dep {
   addSub(watcher) {
     this.subs.push(watcher)
   }
-  depend(watcher){
+  depend(){
     //防止第三方修改
     if(Dep.target){
-      watcher.depend(this)
+      Dep.target.depend(this)
     }
   }
   notify() {

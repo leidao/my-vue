@@ -17,9 +17,11 @@ setTimeout(()=>{
   // vm.msg = 'zf1';
   // vm.msg = 'zf2';
   // vm.msg = 'zf3';
-  vm.msg = {name:''}
-  vm.msg.name = 'zf'
+  // vm.msg = {name:''}
+  // vm.msg.name = 'zf'
   // vm.arr[3].push(15)
-  console.log('vm',vm);
+  vm.arr.push([])
+  vm.arr[4].push('name')
+  console.log('vm',vm.msg);
   
 },1000)

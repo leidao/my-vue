@@ -6,6 +6,16 @@ export const arrayProtoMethods = Object.create(arrayProto)
 const methods = [
   'push','pop','shift','unshift','sort','splice','reverse'
 ]
+//遍历数组每一项，进行递归依赖收集
+export function dependArray(value){
+   for (const key in value) {
+     let current = value[key]
+     current.__ob__ &&current.__ob__.dep.depend();
+     if(Array.isArray(current)){
+      dependArray(current)
+     }
+   }
+}
 export function observeArray(inserted){
    for (let i = 0; i < inserted.length; i++) {
     observe(inserted[i])

@@ -24,8 +24,8 @@ export class Watch {
   //更新
   update(){
     console.log('xxx');
-    
-    this.getter()
+    //每次更新时注意当前watcher
+    this.get()
   }
   depend(dep){
     //获取每一个dep的id

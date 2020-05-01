@@ -1,4 +1,4 @@
-import {arrayProtoMethods,observeArray} from './array'
+import {arrayProtoMethods,observeArray,dependArray} from './array'
 import {observe} from './index'
 import { Dep } from './dep'
 export class Observer{
@@ -35,22 +35,23 @@ function defineReactive(data,key,value){
   Object.defineProperty(data,key,{
     //在组件中使用了对应的属性才会进行依赖收集
     get(){
-      console.log('获取。。。');
       //每一个属性名和属性值（引用类型）都有一个对应的dep，
       //对象使用属性名上的dep进行依赖收集，数组使用属性值上的dep进行依赖收集
       if(Dep.target){
         //对象的依赖收集
-        dep.depend(Dep.target)
+        dep.depend()
         if(childObj){
           //数组的依赖收集
-          childObj.dep.depend(Dep.target)
+          childObj.dep.depend()
+          dependArray(value)
         }
       }
       return value
     },
     set(newValue){
-      console.log('设置。。。');
      if(value === newValue) return
+     //新增的值进行观测
+     observe(newValue)
      value = newValue;
      //更新视图
      dep.notify()
