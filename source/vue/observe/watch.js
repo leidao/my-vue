@@ -25,6 +25,10 @@ export class Watch {
     this.deep = opts.deep
     //立即执行
     this.immediate = opts.immediate
+    //计算watcher标识
+    this.lazy = opts.lazy;
+    //是否重新执行计算函数标识
+    this.dirsty = this.lazy;
     this.value = this.get()
     if (this.immediate) {
       this.cb(this.value)
@@ -35,7 +39,8 @@ export class Watch {
     //将当前watcher挂载
     pushTarget(this)
     //编译时将渲染watcher进行依赖收集，取值时将监视watcher进行依赖收集
-    let value = this.getter()
+    //调用计算函数取值时将使用的data数据对应的计算watcher进行依赖收集
+    let value = this.getter.call(this.vm)
     if (this.deep) {
       traverse(value, seen)
       seen.clear()
@@ -47,7 +52,13 @@ export class Watch {
   update() {
     //每次更新时注意当前watcher
     //watcher队列
-    queueWatch(this)
+    if(this.lazy){
+      //如果时计算属性
+      //计算属性依赖的值变化了 稍后取值时重新计算
+      this.dirsty = true
+    }else{
+      queueWatch(this)
+    }
   }
   depend(dep) {
     //获取每一个dep的id
@@ -60,6 +71,14 @@ export class Watch {
       dep.addSub(this)
     }
   }
+  addDep(){
+    let i = this.deps.length
+    while (i--) {
+      this.deps[i].depend()
+    }
+  }
+  //渲染watcher和监视watcher使用
+  //值改变，触发更新，渲染页面，调用watch函数
   run() {
     let value = this.get()
     if (this.user) {  //如果是监视watcher，执行回调函数
@@ -67,6 +86,11 @@ export class Watch {
       //将老值重新赋值
       this.value = value
     }
+  }
+  //计算watcher使用
+  evalueate(){
+    this.value = this.get()
+    this.dirsty = false
   }
 }
 let hasId = {};
