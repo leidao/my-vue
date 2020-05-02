@@ -1,4 +1,5 @@
 import {Observer} from './observer'
+
 export function initState(vm) {
   //做不同的初始化工作
   let opts = vm.$options;
@@ -8,9 +9,9 @@ export function initState(vm) {
   //  if(opts.computed){
   //    initComputed()
   //  }
-  //  if(opts.data){
-  //    initWatch()
-  //  }
+   if(opts.watch){     
+     initWatch(vm)
+   }
 }
   //代理
 function proxy(vm, source, data) {
@@ -36,6 +37,24 @@ function initData(data, vm) {
   //代理
   proxy(vm, '_data', data)
   observe(data)
+}
+function initWatch(vm){
+  let watch = vm.$options.watch
+  let keys = Object.keys(watch)
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    const userDef = watch[key]
+    let opts = {user:true}
+    let handler;
+    if(typeof userDef === 'object'){
+      opts.deep = userDef.deep
+      opts.immediate = userDef.immediate
+      handler = userDef.handle
+    }else{
+      handler = userDef
+    }
+    vm.$watch(key,handler,opts)
+  }
 }
 export function observe(data) {
   //data不是对象或者为null的话，直接结束

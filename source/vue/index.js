@@ -37,6 +37,10 @@ Vue.prototype.$mount = function (el) {
   //渲染Watcher
   new Watch(vm, updataCompnent)
 }
+Vue.prototype.$watch = function(key,handler,otps = {}){
+  let vm = this
+   new Watch(vm,key,handler,otps)
+}
 function query(el) {
   if (typeof el === 'string') {
     el = document.querySelector(el)
