@@ -2,7 +2,7 @@ const defaultRE = /\{\{((?:.|\r?\n)+?)\}\}/g
 export const util = {
   getValue(expr,vm){
     //scolle.name =》 [scolle,name]  arr[2],数组分割未做
-     let v = expr.split('.')
+     let v = expr.split('.')     
      return v.reduce((pre,next)=>{
        pre = pre[next];
        return pre;

@@ -4,7 +4,7 @@ import Vue from 'vue'
 let vm = new Vue({
   el:'#app',
   data:()=>({
-    msg:'ldx',
+    msg:{},
     scolle:{
       name:'zf'
     },
@@ -17,11 +17,12 @@ setTimeout(()=>{
   // vm.msg = 'zf1';
   // vm.msg = 'zf2';
   // vm.msg = 'zf3';
-  // vm.msg = {name:''}
-  // vm.msg.name = 'zf'
+  vm.msg = {but:''}
+  vm.msg.but = 'zf'
+  vm.msg.but = 'zf2'
   // vm.arr[3].push(15)
-  vm.arr.push([])
-  vm.arr[4].push('name')
+  // vm.arr.push([])
+  // vm.arr[4].push('name')
   console.log('vm',vm.msg);
   
 },1000)

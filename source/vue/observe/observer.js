@@ -43,7 +43,7 @@ function defineReactive(data,key,value){
         if(childObj){
           //数组的依赖收集
           childObj.dep.depend()
-          dependArray(value)
+          // dependArray(value)
         }
       }
       return value
@@ -51,8 +51,9 @@ function defineReactive(data,key,value){
     set(newValue){
      if(value === newValue) return
      //新增的值进行观测
+    //  debugger
      observe(newValue)
-     value = newValue;
+     value = newValue;     
      //更新视图
      dep.notify()
     }

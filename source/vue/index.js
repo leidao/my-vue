@@ -26,7 +26,6 @@ Vue.prototype._updata = function () {
   //编译
   compiler(node,vm);
   el.append(node)
-  console.log('fragment', node);
 
 }
 Vue.prototype.$mount = function (el) {
