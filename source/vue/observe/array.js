@@ -26,7 +26,7 @@ methods.forEach(method=>{
   arrayProtoMethods[method] = function(...args){
     //执行原生数组方法
     let r = arrayProto[method].apply(this,args)
-    console.log('数组观测');
+    // console.log('数组观测');
     let inserted;
     switch (method) {
       case 'push':

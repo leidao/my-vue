@@ -4,6 +4,6 @@ export function vNode(tag,props,key,children,text){
      props,
      key,
      children,
-     text
+     text:JSON.stringify(text)
    }
 }
