@@ -26,7 +26,7 @@ let vm = new Vue({
       deep: true
     }
   },
-  render(h){
+  render(h) {
     return h('ul', { id: 'content', style: { background: 'blue' } },
       h('li', { class: 'warp', style: { color: 'yellow' } }, this.msg),
       h('li', { class: 'warp', style: { color: 'yellow' } }, this.fullName),
@@ -34,8 +34,8 @@ let vm = new Vue({
       h('li', { class: 'warp', style: { color: 'yellow' } }, 'n'),
       h('li', { class: 'warp', style: { color: 'yellow' }, }, 'a'),
       h('li', { class: 'warp', style: { color: 'yellow' } }, 'e'),
-      h('li', { class: 'warp', style: { color: 'yellow' },key:'a' }, 'a')
-      )
+      h('li', { class: 'warp', style: { color: 'yellow' }, key: 'a' }, 'a')
+    )
   }
 })
 
